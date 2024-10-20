@@ -2,9 +2,13 @@ pipeline {
     agent any
 
     stages {
-        // Build stage: Install dependencies using pip
+        // Build stage: Set up the Python environment and install dependencies
         stage('Build') {
             steps {
+                script {
+                    // Specify the Python version you want to use
+                    pyenv '3.9.6' // Adjust to the desired version
+                }
                 echo 'Installing dependencies...'
                 sh 'pip install -r requirements.txt'
             }
