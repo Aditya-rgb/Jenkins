@@ -1,33 +1,30 @@
 pipeline {
-    agent any // Use any available agent
-
+    agent any
     stages {
-        stage('Checkout SCM') {
+        stage('Checkout') {
             steps {
-                checkout scm
+                // Replace 'your-credentials-id' with the actual ID of your GitHub credentials in Jenkins
+                git credentialsId: 'agent1', url: 'https://github.com/Aditya-rgb/Jenkins', branch: 'main' // or 'master' if that’s your branch name
             }
         }
-        
         stage('Setup Python') {
             steps {
-                // Update the package list
-                sh 'apt-get update'
-                // Add any additional setup steps here (e.g., installing packages)
+                script {
+                    // If you need sudo access, you can add a sudoers entry or modify this step accordingly
+                    sh 'sudo apt-get update'
+                    sh 'sudo apt-get install -y python3 python3-pip'  // Install required Python packages
+                }
             }
         }
-
         stage('Run Tests') {
             steps {
-                // Add your test commands here
-                // For example:
-                sh 'python -m unittest discover'
+                sh 'python3 -m unittest discover'  // Run your tests
             }
         }
     }
-
     post {
         always {
-            cleanWs() // Clean up the workspace after the build
+            cleanWs()  // Clean workspace after job completion
         }
     }
 }
