@@ -2,37 +2,29 @@ pipeline {
     agent any
 
     stages {
-        // Build stage: Set up the Python environment and install dependencies
-        stage('Build') {
+        stage('Setup Python') {
             steps {
-                script {
-                    // Specify the Python version you want to use
-                    pyenv '3.9.6' // Adjust to the desired version
+                // Specify the Python version you want to use
+                pyenv('3.8.6') {
+                    // Here you can create a virtual environment and install dependencies
+                    sh '''
+                    python -m venv venv
+                    source venv/bin/activate
+                    pip install -r requirements.txt
+                    '''
                 }
-                echo 'Installing dependencies...'
-                sh 'pip install -r requirements.txt'
             }
         }
-
-        // Test stage: Run unit tests using pytest
-        stage('Test') {
+        stage('Run Tests') {
             steps {
-                echo 'Running unit tests...'
-                sh 'pytest tests/test_app.py' // Adjust if you have multiple test files
+                // Execute your tests within the virtual environment
+                pyenv('3.8.6') {
+                    sh '''
+                    source venv/bin/activate
+                    pytest
+                    '''
+                }
             }
-        }
-    }
-
-    post {
-        always {
-            echo 'Pipeline complete. Cleaning up...'
-            cleanWs()
-        }
-        success {
-            echo 'Build and tests were successful!'
-        }
-        failure {
-            echo 'Build or tests failed!'
         }
     }
 }
