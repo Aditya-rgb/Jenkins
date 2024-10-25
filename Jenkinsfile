@@ -4,19 +4,21 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Checkout the source code from the repository
                 checkout scm
             }
         }
         stage('Install pip') {
             steps {
-                // Update package lists and install pip
                 sh 'sudo apt-get update && sudo apt-get install -y python3-pip'
+            }
+        }
+        stage('Install Python venv') {
+            steps {
+                sh 'sudo apt-get install -y python3.12-venv'
             }
         }
         stage('Check Python and pip Installation') {
             steps {
-                // Check the installed versions of Python and pip
                 sh '''
                     python3 --version
                     python3 -m pip --version
@@ -25,7 +27,6 @@ pipeline {
         }
         stage('Set Up Python') {
             steps {
-                // Create a virtual environment and install requirements
                 sh '''
                     python3 -m venv venv
                     . venv/bin/activate
@@ -35,7 +36,6 @@ pipeline {
         }
         stage('Run Tests') {
             steps {
-                // Run your tests using pytest
                 sh '''
                     . venv/bin/activate
                     pytest
@@ -45,7 +45,6 @@ pipeline {
     }
     post {
         always {
-            // Clean up the workspace after the build
             cleanWs()
         }
         success {
