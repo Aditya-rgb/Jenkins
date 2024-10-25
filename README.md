@@ -219,13 +219,19 @@ Once Jenkins was set up, the following steps were taken to create and configure 
 
 1. **Creating a New Pipeline Job**:  
    - We created a new job in Jenkins and selected the "Pipeline" project type.
+  
+   ![Alt Text](/images/JK-9.JPG)
 
 2. **Git Repository Configuration**:  
    - In the pipeline configuration, we entered the URL of the Git repository that contains our Jenkinsfile.
+  
+   ![Alt Text](/images/JK-10.JPG)
 
 3. **Pipeline Script from SCM**:  
    - Under the pipeline configuration, we selected "Pipeline script from SCM" and provided the Git repository URL.
    - Jenkins automatically detected the `Jenkinsfile` in the repository and executed it to run the pipeline.
+  
+   ![Alt Text](/images/JK-11.JPG)
 
 By following these steps, Jenkins fetched the code from the repository and ran the pipeline as defined in the `Jenkinsfile`.
 
