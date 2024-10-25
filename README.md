@@ -197,7 +197,34 @@ The Jenkins pipeline was defined in the `Jenkinsfile`. It is responsible for che
 ## Issues Resolved
 
 - **Virtual Environment Setup**: An error related to the absence of `ensurepip` was resolved by installing the `python3.12-venv` package.
-- **Sudo Permissions**: The `jenkins` user was granted permissions to run `apt-get` commands without password prompts.
+
+- **Sudo Permissions**: The `jenkins` user required permissions to run `apt-get` commands without password prompts. This was resolved by updating the sudoers file. Follow these steps to fix the issue:
+  
+  1. Access your AWS EC2 instance:
+     ```bash
+     ssh -i <your-key.pem> ubuntu@<your-ec2-public-ip>
+     ```
+  
+  2. Switch to the root user:
+     ```bash
+     sudo su -
+     ```
+  
+  3. Edit the sudoers file:
+     ```bash
+     visudo
+     ```
+
+  4. Add the following line to grant the Jenkins user necessary permissions:
+     ```bash
+     jenkins ALL=(ALL) NOPASSWD: /usr/bin/apt-get
+     ```
+
+  5. Save and close the file, then restart the EC2 instance to apply the changes:
+     ```bash
+     reboot
+     ```
+
 
 ## Conclusion
 
