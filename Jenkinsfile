@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    triggers {
+        // Trigger on SCM changes (e.g., Git)
+        pollSCM('* * * * *') // Checks for changes every minute
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -40,6 +45,18 @@ pipeline {
                     . venv/bin/activate
                     pytest
                 '''
+            }
+        }
+        stage('Move to Staging Environment') {
+            when {
+                expression {
+                    currentBuild.result == 'SUCCESS'
+                }
+            }
+            steps {
+                script {
+                    echo 'Moving to staging environment as all test cases passed!'
+                }
             }
         }
     }
