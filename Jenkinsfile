@@ -9,13 +9,22 @@ pipeline {
             }
         }
 
-        stage('Check Python Version') {
+        stage('Check Python and pip Installation') {
             steps {
                 // Verify Python and pip installation
-                sh '''
-                python3 --version
-                pip3 --version
-                '''
+                script {
+                    def pythonInstalled = sh(script: 'python3 --version', returnStatus: true) == 0
+                    def pipInstalled = sh(script: 'python3 -m pip --version', returnStatus: true) == 0
+
+                    if (!pythonInstalled) {
+                        error "Python is not installed!"
+                    }
+
+                    if (!pipInstalled) {
+                        echo "pip is not installed. Installing pip..."
+                        sh 'sudo apt-get update && sudo apt-get install -y python3-pip'
+                    }
+                }
             }
         }
 
