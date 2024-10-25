@@ -2,61 +2,54 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout Code') {
+        stage('Checkout') {
             steps {
+                // Checkout the source code from the repository
                 checkout scm
             }
         }
-
-        stage('Check Python and pip Installation') {
+        stage('Install pip') {
             steps {
-                script {
-                    // Check if Python is installed
-                    def pythonInstalled = sh(script: 'python3 --version', returnStatus: true) == 0
-                    // Check if pip is installed
-                    def pipInstalled = sh(script: 'python3 -m pip --version', returnStatus: true) == 0
-
-                    if (!pythonInstalled) {
-                        error "Python is not installed!"
-                    }
-
-                    if (!pipInstalled) {
-                        echo "pip is not installed. Installing pip..."
-                        // Use curl to download get-pip.py and install pip
-                        sh '''
-                        curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-                        python3 get-pip.py
-                        '''
-                    }
-                }
+                // Update package lists and install pip
+                sh 'sudo apt-get update && sudo apt-get install -y python3-pip'
             }
         }
-
-        stage('Set Up Python') {
+        stage('Check Python and pip Installation') {
             steps {
+                // Check the installed versions of Python and pip
                 sh '''
-                set -e  # Fail fast on error
-                python3 -m pip install --upgrade pip  # Upgrade pip
-                python3 -m venv venv  # Create a virtual environment
-                source venv/bin/activate  # Activate the virtual environment
-                pip install -r requirements.txt  # Install dependencies
+                    python3 --version
+                    python3 -m pip --version
                 '''
             }
         }
-
+        stage('Set Up Python') {
+            steps {
+                // Create a virtual environment and install requirements
+                sh '''
+                    python3 -m venv venv
+                    source venv/bin/activate
+                    pip install -r requirements.txt
+                '''
+            }
+        }
         stage('Run Tests') {
             steps {
+                // Run your tests using pytest
                 sh '''
-                source venv/bin/activate  # Activate the virtual environment
-                pytest -v tests/  # Run tests with verbose output
+                    source venv/bin/activate
+                    pytest
                 '''
             }
         }
     }
-
     post {
+        always {
+            // Clean up the workspace after the build
+            cleanWs()
+        }
         success {
-            echo 'Tests ran successfully!'
+            echo 'Pipeline completed successfully!'
         }
         failure {
             echo 'Tests failed!'
