@@ -4,16 +4,16 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                // Step 1: Checkout the repository code
                 checkout scm
             }
         }
 
         stage('Check Python and pip Installation') {
             steps {
-                // Verify Python and pip installation
                 script {
+                    // Check if Python is installed
                     def pythonInstalled = sh(script: 'python3 --version', returnStatus: true) == 0
+                    // Check if pip is installed
                     def pipInstalled = sh(script: 'python3 -m pip --version', returnStatus: true) == 0
 
                     if (!pythonInstalled) {
@@ -22,7 +22,11 @@ pipeline {
 
                     if (!pipInstalled) {
                         echo "pip is not installed. Installing pip..."
-                        sh 'sudo apt-get update && sudo apt-get install -y python3-pip'
+                        // Use curl to download get-pip.py and install pip
+                        sh '''
+                        curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+                        python3 get-pip.py
+                        '''
                     }
                 }
             }
@@ -30,7 +34,6 @@ pipeline {
 
         stage('Set Up Python') {
             steps {
-                // Step 2: Set up Python environment and install dependencies
                 sh '''
                 set -e  # Fail fast on error
                 python3 -m pip install --upgrade pip  # Upgrade pip
@@ -43,7 +46,6 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                // Step 3: Run pytest to execute tests
                 sh '''
                 source venv/bin/activate  # Activate the virtual environment
                 pytest -v tests/  # Run tests with verbose output
