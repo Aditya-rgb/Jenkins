@@ -90,6 +90,7 @@ To install Jenkins on the EC2 instance, follow the steps below:
     Open your web browser and visit the following URL to complete Jenkins setup:
     ```
     http://<your-ec2-public-ip>:8080
+    # http://44.242.147.203:8080/
     ```
 
     **Note**: Make sure that port `8080` is added as an inbound rule in the AWS EC2 security group.
