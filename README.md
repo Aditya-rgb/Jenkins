@@ -5,8 +5,8 @@ This document outlines the steps taken to set up and configure a Jenkins pipelin
 ## Table of Contents
 
 - [Introduction](#introduction)
-- [Jenkins Setup](#jenkins-setup)
 - [Environment Setup](#environment-setup)
+- [Jenkins Setup](#jenkins-setup)
 - [Jenkinsfile Pipeline](#jenkinsfile-pipeline)
   - [Checkout Stage](#checkout-stage)
   - [Install pip](#install-pip)
@@ -28,6 +28,14 @@ The goal of this project was to set up a Jenkins pipeline that automates the fol
 - Moving to the staging environment after successful test completion
 
 This project uses Jenkins on an AWS EC2 instance, a Python virtual environment, and pytest for testing.
+
+## Environment Setup
+
+1. **EC2 Setup**: An AWS EC2 instance was used as the environment to host Jenkins.
+2. **User Permissions**: The `/etc/sudoers` file was modified to allow the `jenkins` user to run `apt-get` commands without prompting for a password:
+    ```bash
+    jenkins ALL=(ALL) NOPASSWD: /usr/bin/apt-get
+    ```
 
 ## Jenkins Setup
 
@@ -95,13 +103,6 @@ To install Jenkins on the EC2 instance, follow the steps below:
 
     **Note**: Make sure that port `8080` is added as an inbound rule in the AWS EC2 security group.
 
-## Environment Setup
-
-1. **EC2 Setup**: An AWS EC2 instance was used as the environment to host Jenkins.
-2. **User Permissions**: The `/etc/sudoers` file was modified to allow the `jenkins` user to run `apt-get` commands without prompting for a password:
-    ```bash
-    jenkins ALL=(ALL) NOPASSWD: /usr/bin/apt-get
-    ```
 
 ## Jenkinsfile Pipeline
 
