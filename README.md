@@ -108,6 +108,8 @@ To install Jenkins on the EC2 instance, follow the steps below:
     sudo systemctl status jenkins
     ```
 
+    ![Alt Text](/images/JK-8.JPG)
+
 9. **Access Jenkins UI:**
     Open your web browser and visit the following URL to complete Jenkins setup:
     ```
@@ -116,6 +118,8 @@ To install Jenkins on the EC2 instance, follow the steps below:
     ```
 
     **Note**: Make sure that port `8080` is added as an inbound rule in the AWS EC2 security group.
+
+   ![Alt Text](/images/JK-2.JPG)
 
 
 ## Jenkinsfile Pipeline
@@ -224,6 +228,13 @@ Once Jenkins was set up, the following steps were taken to create and configure 
    - Jenkins automatically detected the `Jenkinsfile` in the repository and executed it to run the pipeline.
 
 By following these steps, Jenkins fetched the code from the repository and ran the pipeline as defined in the `Jenkinsfile`.
+
+
+![Alt Text](/images/JK-7.JPG)
+
+![Alt Text](/images/JK-5.JPG)
+
+![Alt Text](/images/JK-6.JPG)
 
 
 ## Issues Resolved
