@@ -19,6 +19,8 @@ This document outlines the steps taken to set up and configure a Jenkins pipelin
 - [Configuring the Jenkins Pipeline](#Configuring-the-Jenkins-Pipeline)
 - [Issues Resolved](#issues-resolved)
 - [Conclusion](#conclusion)
+- [Contributing](#contributing)
+- [Contact](#Contact)
 
 ## Introduction
 
@@ -278,3 +280,24 @@ By following these steps, Jenkins fetched the code from the repository and ran t
 ## Conclusion
 
 The Jenkins pipeline was successfully set up on an EC2 instance. It automates the process of checking out the code, installing dependencies, setting up a virtual environment, running tests, and moving to the staging environment if all tests pass.
+
+## Contributing
+
+I welcome contributions! To contribute:
+
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Commit your changes with clear messages.
+4. Submit a pull request for review.
+
+Make sure to follow the code style guidelines and include proper documentation for any new features.
+
+
+## Contact
+
+For any queries, feel free to contact me:
+
+- **Email:** adityavakharia@gmail.com
+- **GitHub:** [Aditya-rgb](https://github.com/Aditya-rgb/Jenkins)
+
+You can also open an issue in the repository for questions or suggestions.
