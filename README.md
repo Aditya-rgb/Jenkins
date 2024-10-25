@@ -6,6 +6,7 @@ This document outlines the steps taken to set up and configure a Jenkins pipelin
 
 - [Introduction](#introduction)
 - [Environment Setup](#environment-setup)
+- [Directory Structure](#directory-structure)
 - [Jenkins Setup](#jenkins-setup)
 - [Jenkinsfile Pipeline](#jenkinsfile-pipeline)
   - [Checkout Stage](#checkout-stage)
@@ -37,6 +38,18 @@ This project uses Jenkins on an AWS EC2 instance, a Python virtual environment, 
     ```bash
     jenkins ALL=(ALL) NOPASSWD: /usr/bin/apt-get
     ```
+
+## Directory Structure
+```bash
+your-repo/
+├── app.py                  # Main Flask application
+├── templates/              # Directory for HTML templates
+│   └── index.html          # Main HTML template for the application
+├── tests/                  # Directory for test files
+│   └── test_app.py         # Pytest file for unit tests
+├── requirements.txt        # Python dependencies
+└── Jenkinsfile             # Jenkins pipeline script
+```
 
 ## Jenkins Setup
 
