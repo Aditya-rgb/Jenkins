@@ -15,6 +15,7 @@ This document outlines the steps taken to set up and configure a Jenkins pipelin
   - [Set Up Python](#set-up-python)
   - [Run Tests](#run-tests)
   - [Move to Staging Environment](#move-to-staging-environment)
+- [Configuring the Jenkins Pipeline](#Configuring-the-Jenkins-Pipeline)
 - [Issues Resolved](#issues-resolved)
 - [Conclusion](#conclusion)
 
@@ -194,6 +195,23 @@ The Jenkins pipeline was defined in the `Jenkinsfile`. It is responsible for che
         }
     }
     ```
+
+## Configuring the Jenkins Pipeline
+
+Once Jenkins was set up, the following steps were taken to create and configure the Jenkins Pipeline:
+
+1. **Creating a New Pipeline Job**:  
+   - We created a new job in Jenkins and selected the "Pipeline" project type.
+
+2. **Git Repository Configuration**:  
+   - In the pipeline configuration, we entered the URL of the Git repository that contains our Jenkinsfile.
+
+3. **Pipeline Script from SCM**:  
+   - Under the pipeline configuration, we selected "Pipeline script from SCM" and provided the Git repository URL.
+   - Jenkins automatically detected the `Jenkinsfile` in the repository and executed it to run the pipeline.
+
+By following these steps, Jenkins fetched the code from the repository and ran the pipeline as defined in the `Jenkinsfile`.
+
 
 ## Issues Resolved
 
